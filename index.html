@@ -7,407 +7,338 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --burgundy:    #5a0e1e;
-      --burgundy-dk: #3a0812;
-      --gold:        #c9a84c;
-      --gold-lt:     #e8c97a;
-      --cream:       #f7f0e6;
-      --warm-white:  #fdf8f2;
-      --charcoal:    #1a1210;
-      --text-mid:    #5c4a3a;
-      --text-light:  #8a7060;
-      --serif:       'Cormorant Garamond', Georgia, serif;
-      --sans:        'Montserrat', sans-serif;
+      --burgundy: #5a0e1e; --burgundy-dk: #3a0812; --gold: #c9a84c; --gold-lt: #e8c97a;
+      --cream: #f7f0e6; --warm-white: #fdf8f2; --charcoal: #1a1210;
+      --text-mid: #5c4a3a; --text-light: #8a7060;
+      --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Montserrat', sans-serif;
+      /* Sofia chat palette — matching Voiceflow screenshot */
+      --chat-header: #2c1a10;
+      --chat-btn: #3b2010;
+      --chat-btn-hover: #5a3020;
+      --chat-body: #ffffff;
+      --chat-bot-bubble: #f2ede8;
+      --chat-user-bubble: #3b2010;
+      --chat-border: #e0d5c8;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--warm-white); color: var(--charcoal); overflow-x: hidden; }
 
-    body {
-      font-family: var(--sans);
-      background: var(--warm-white);
-      color: var(--charcoal);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5vw;
-      height: 72px;
-      background: rgba(26,18,16,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201,168,76,0.18);
-      transition: background 0.3s;
-    }
-    .nav-logo {
-      display: flex; flex-direction: column; line-height: 1;
-    }
-    .nav-logo span:first-child {
-      font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
-      color: var(--gold); letter-spacing: 0.04em;
-    }
-    .nav-logo span:last-child {
-      font-size: 0.6rem; letter-spacing: 0.22em; color: var(--cream);
-      text-transform: uppercase; margin-top: 2px;
-    }
-    .nav-links {
-      display: flex; gap: 2.4rem; list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--cream); text-decoration: none; opacity: 0.85;
-      transition: opacity 0.2s, color 0.2s;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; height: 72px; background: rgba(26,18,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.18); }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo span:first-child { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--gold); letter-spacing: 0.04em; }
+    .nav-logo span:last-child { font-size: 0.6rem; letter-spacing: 0.22em; color: var(--cream); text-transform: uppercase; margin-top: 2px; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: 0.85; transition: opacity 0.2s, color 0.2s; }
     .nav-links a:hover { opacity: 1; color: var(--gold-lt); }
-    .nav-reserve {
-      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-      background: var(--gold); color: var(--charcoal);
-      border: none; padding: 10px 22px; cursor: pointer;
-      font-family: var(--sans); font-weight: 600;
-      transition: background 0.2s;
-    }
+    .nav-reserve { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; background: var(--gold); color: var(--charcoal); border: none; padding: 10px 22px; cursor: pointer; font-family: var(--sans); font-weight: 600; transition: background 0.2s; }
     .nav-reserve:hover { background: var(--gold-lt); }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative; height: 100vh; min-height: 600px;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(26,18,16,0.55) 0%, rgba(58,8,18,0.65) 60%, rgba(26,18,16,0.9) 100%),
-        url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&auto=format&fit=crop&q=80') center/cover no-repeat;
-    }
-    .hero-content {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column; align-items: center; gap: 1.4rem;
-      padding: 0 1.5rem;
-      animation: fadeUp 1.1s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero-eyebrow {
-      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); font-weight: 500;
-    }
-    .hero-title {
-      font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem);
-      font-weight: 300; color: var(--cream); line-height: 1.05;
-      letter-spacing: 0.01em;
-    }
+    .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,18,16,0.55) 0%, rgba(58,8,18,0.65) 60%, rgba(26,18,16,0.9) 100%), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&auto=format&fit=crop&q=80') center/cover no-repeat; }
+    .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 1.4rem; padding: 0 1.5rem; animation: fadeUp 1.1s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .hero-title { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; color: var(--cream); line-height: 1.05; }
     .hero-title em { font-style: italic; color: var(--gold-lt); }
-    .hero-sub {
-      font-size: 0.85rem; color: rgba(247,240,230,0.75);
-      letter-spacing: 0.06em; max-width: 460px; line-height: 1.8;
-    }
-    .hero-divider {
-      width: 60px; height: 1px; background: var(--gold); opacity: 0.6;
-    }
+    .hero-sub { font-size: 0.85rem; color: rgba(247,240,230,0.75); letter-spacing: 0.06em; max-width: 460px; line-height: 1.8; }
+    .hero-divider { width: 60px; height: 1px; background: var(--gold); opacity: 0.6; }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-    .btn-primary {
-      background: var(--gold); color: var(--charcoal);
-      padding: 14px 34px; font-size: 0.72rem; letter-spacing: 0.16em;
-      text-transform: uppercase; font-family: var(--sans); font-weight: 600;
-      border: none; cursor: pointer; transition: background 0.2s, transform 0.15s;
-    }
+    .btn-primary { background: var(--gold); color: var(--charcoal); padding: 14px 34px; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-family: var(--sans); font-weight: 600; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--cream);
-      padding: 13px 34px; font-size: 0.72rem; letter-spacing: 0.16em;
-      text-transform: uppercase; font-family: var(--sans); font-weight: 500;
-      border: 1px solid rgba(247,240,230,0.45); cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, transform 0.15s;
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold-lt); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--cream); padding: 13px 34px; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-family: var(--sans); font-weight: 500; border: 1px solid rgba(247,240,230,0.45); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold-lt); }
 
-    /* ── INTRO STRIP ── */
-    .intro-strip {
-      background: var(--burgundy-dk);
-      border-top: 1px solid rgba(201,168,76,0.2);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      padding: 22px 5vw;
-      display: flex; align-items: center; justify-content: center;
-      gap: 3rem; flex-wrap: wrap;
-    }
+    .intro-strip { background: var(--burgundy-dk); border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 22px 5vw; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .intro-stat { text-align: center; }
-    .intro-stat strong {
-      display: block; font-family: var(--serif); font-size: 1.8rem;
-      color: var(--gold); font-weight: 400;
-    }
-    .intro-stat span {
-      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(247,240,230,0.55); margin-top: 2px; display: block;
-    }
+    .intro-stat strong { display: block; font-family: var(--serif); font-size: 1.8rem; color: var(--gold); font-weight: 400; }
+    .intro-stat span { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,240,230,0.55); margin-top: 2px; display: block; }
     .strip-sep { width: 1px; height: 40px; background: rgba(201,168,76,0.25); }
 
-    /* ── SECTION COMMON ── */
     section { padding: 100px 5vw; }
-    .section-tag {
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); font-weight: 500; margin-bottom: 0.7rem;
-    }
-    .section-title {
-      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300; line-height: 1.15; color: var(--charcoal);
-    }
+    .section-tag { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.7rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.15; color: var(--charcoal); }
     .section-title em { font-style: italic; color: var(--burgundy); }
-    .gold-line {
-      width: 50px; height: 2px; background: var(--gold);
-      margin: 1.2rem 0 0;
-    }
+    .gold-line { width: 50px; height: 2px; background: var(--gold); margin: 1.2rem 0 0; }
 
-    /* ── STORY ── */
     .story { background: var(--warm-white); }
-    .story-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center; max-width: 1100px; margin: 0 auto;
-    }
-    .story-text p {
-      font-size: 0.9rem; color: var(--text-mid); line-height: 1.9;
-      margin-top: 1.6rem;
-    }
-    .story-image {
-      position: relative; height: 460px; overflow: hidden;
-    }
-    .story-image::before {
-      content: ''; position: absolute; inset: -12px -12px auto auto;
-      width: 70%; height: 70%;
-      border: 2px solid rgba(201,168,76,0.35); z-index: 0;
-    }
-    .story-image img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: relative; z-index: 1;
-    }
+    .story-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .story-text p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.9; margin-top: 1.6rem; }
+    .story-image { position: relative; height: 460px; overflow: hidden; }
+    .story-image img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ── MENU ── */
     .menu-section { background: var(--cream); }
     .menu-header { max-width: 1100px; margin: 0 auto 60px; }
-    .menu-tabs {
-      display: flex; gap: 0; border-bottom: 1px solid rgba(90,14,30,0.15);
-      margin-top: 2rem; flex-wrap: wrap;
-    }
-    .menu-tab {
-      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--text-light); padding: 12px 24px; cursor: pointer;
-      border-bottom: 2px solid transparent; margin-bottom: -1px;
-      transition: color 0.2s, border-color 0.2s;
-      background: none; border-top: none; border-left: none; border-right: none;
-      font-family: var(--sans); font-weight: 500;
-    }
+    .menu-tabs { display: flex; gap: 0; border-bottom: 1px solid rgba(90,14,30,0.15); margin-top: 2rem; flex-wrap: wrap; }
+    .menu-tab { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); padding: 12px 24px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; background: none; border-top: none; border-left: none; border-right: none; font-family: var(--sans); font-weight: 500; }
     .menu-tab.active { color: var(--burgundy); border-bottom-color: var(--gold); }
     .menu-tab:hover { color: var(--burgundy); }
-
-    .menu-grid {
-      display: none; max-width: 1100px; margin: 0 auto;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px;
-    }
+    .menu-grid { display: none; max-width: 1100px; margin: 0 auto; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; }
     .menu-grid.active { display: grid; }
-    .menu-card {
-      background: #fff; padding: 28px; position: relative;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
+    .menu-card { background: #fff; padding: 28px; border-bottom: 2px solid transparent; transition: border-color 0.2s, box-shadow 0.2s; }
     .menu-card:hover { border-bottom-color: var(--gold); box-shadow: 0 4px 24px rgba(90,14,30,0.06); }
     .menu-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-    .menu-card h3 {
-      font-family: var(--serif); font-size: 1.15rem; font-weight: 500;
-      color: var(--charcoal); line-height: 1.2;
-    }
-    .menu-price {
-      font-family: var(--serif); font-size: 1.1rem; color: var(--burgundy);
-      font-weight: 400; white-space: nowrap; padding-top: 2px;
-    }
-    .menu-card p {
-      font-size: 0.78rem; color: var(--text-light); line-height: 1.75;
-      margin-top: 0.7rem;
-    }
-    .menu-badge {
-      display: inline-block; font-size: 0.58rem; letter-spacing: 0.14em;
-      text-transform: uppercase; padding: 3px 8px; margin-top: 0.8rem;
-      background: rgba(90,14,30,0.07); color: var(--burgundy); font-weight: 600;
-    }
+    .menu-card h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; color: var(--charcoal); line-height: 1.2; }
+    .menu-price { font-family: var(--serif); font-size: 1.1rem; color: var(--burgundy); font-weight: 400; white-space: nowrap; padding-top: 2px; }
+    .menu-card p { font-size: 0.78rem; color: var(--text-light); line-height: 1.75; margin-top: 0.7rem; }
+    .menu-badge { display: inline-block; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; margin-top: 0.8rem; background: rgba(90,14,30,0.07); color: var(--burgundy); font-weight: 600; }
 
-    /* ── EXPERIENCE ── */
     .experience { background: var(--charcoal); }
     .experience .section-title { color: var(--cream); }
     .experience .section-title em { color: var(--gold-lt); }
-    .exp-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-      max-width: 1100px; margin: 3rem auto 0;
-    }
-    .exp-item {
-      padding: 48px 40px; border: 1px solid rgba(201,168,76,0.1);
-      transition: background 0.25s;
-    }
+    .exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 1100px; margin: 3rem auto 0; }
+    .exp-item { padding: 48px 40px; border: 1px solid rgba(201,168,76,0.1); transition: background 0.25s; }
     .exp-item:hover { background: rgba(201,168,76,0.04); }
-    .exp-num {
-      font-family: var(--serif); font-size: 3rem; color: rgba(201,168,76,0.2);
-      font-weight: 300; line-height: 1;
-    }
-    .exp-item h3 {
-      font-family: var(--serif); font-size: 1.3rem; color: var(--gold-lt);
-      font-weight: 400; margin-top: 1rem; margin-bottom: 0.7rem;
-    }
-    .exp-item p {
-      font-size: 0.82rem; color: rgba(247,240,230,0.55); line-height: 1.85;
-    }
+    .exp-num { font-family: var(--serif); font-size: 3rem; color: rgba(201,168,76,0.2); font-weight: 300; line-height: 1; }
+    .exp-item h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--gold-lt); font-weight: 400; margin-top: 1rem; margin-bottom: 0.7rem; }
+    .exp-item p { font-size: 0.82rem; color: rgba(247,240,230,0.55); line-height: 1.85; }
 
-    /* ── INFO BAR ── */
     .info-section { background: var(--burgundy); padding: 80px 5vw; }
-    .info-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: rgba(255,255,255,0.08);
-      max-width: 1100px; margin: 0 auto;
-    }
-    .info-block {
-      background: var(--burgundy); padding: 40px 32px;
-      transition: background 0.2s;
-    }
+    .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.08); max-width: 1100px; margin: 0 auto; }
+    .info-block { background: var(--burgundy); padding: 40px 32px; transition: background 0.2s; }
     .info-block:hover { background: var(--burgundy-dk); }
-    .info-icon {
-      width: 36px; height: 36px; margin-bottom: 1.2rem;
-      color: var(--gold); opacity: 0.9;
-    }
-    .info-block h4 {
-      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.9rem; font-weight: 500;
-    }
-    .info-block p {
-      font-size: 0.83rem; color: rgba(247,240,230,0.7);
-      line-height: 1.9;
-    }
+    .info-icon { width: 36px; height: 36px; margin-bottom: 1.2rem; color: var(--gold); opacity: 0.9; }
+    .info-block h4 { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; font-weight: 500; }
+    .info-block p { font-size: 0.83rem; color: rgba(247,240,230,0.7); line-height: 1.9; }
     .info-block strong { color: var(--cream); }
 
-    /* ── TESTIMONIALS ── */
     .testimonials { background: var(--warm-white); }
     .test-header { max-width: 1100px; margin: 0 auto 3rem; }
-    .test-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .test-card {
-      background: #fff; padding: 36px 32px;
-      border-top: 3px solid var(--gold); position: relative;
-    }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
+    .test-card { background: #fff; padding: 36px 32px; border-top: 3px solid var(--gold); }
     .stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
-    .test-card blockquote {
-      font-family: var(--serif); font-size: 1.05rem; font-style: italic;
-      color: var(--charcoal); line-height: 1.7; font-weight: 300;
-    }
-    .test-author {
-      display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem;
-    }
-    .author-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--cream); overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--serif); font-size: 1rem; color: var(--burgundy); font-weight: 500;
-    }
+    .test-card blockquote { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--charcoal); line-height: 1.7; font-weight: 300; }
+    .test-author { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem; }
+    .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 1rem; color: var(--burgundy); font-weight: 500; }
     .author-info strong { display: block; font-size: 0.78rem; color: var(--charcoal); font-weight: 600; }
     .author-info span { font-size: 0.7rem; color: var(--text-light); }
 
-    /* ── RESERVATION ── */
-    .reservation-section {
-      background: linear-gradient(135deg, var(--burgundy-dk) 0%, var(--burgundy) 100%);
-      padding: 100px 5vw;
-    }
-    .res-inner {
-      max-width: 700px; margin: 0 auto; text-align: center;
-    }
+    .reservation-section { background: linear-gradient(135deg, var(--burgundy-dk) 0%, var(--burgundy) 100%); padding: 100px 5vw; }
+    .res-inner { max-width: 700px; margin: 0 auto; text-align: center; }
     .res-inner .section-tag { color: var(--gold-lt); }
     .res-inner .section-title { color: var(--cream); }
     .res-inner .section-title em { color: var(--gold-lt); }
     .res-inner .gold-line { margin: 1.2rem auto 2rem; }
-    .res-inner p {
-      font-size: 0.88rem; color: rgba(247,240,230,0.65);
-      line-height: 1.85; margin-bottom: 2.5rem;
-    }
-    .res-cta-note {
-      margin-top: 1.5rem; font-size: 0.72rem;
-      color: rgba(247,240,230,0.4); letter-spacing: 0.08em;
-    }
+    .res-inner p { font-size: 0.88rem; color: rgba(247,240,230,0.65); line-height: 1.85; margin-bottom: 2.5rem; }
+    .res-cta-note { margin-top: 1.5rem; font-size: 0.72rem; color: rgba(247,240,230,0.4); letter-spacing: 0.08em; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--charcoal);
-      padding: 60px 5vw 30px;
-      border-top: 1px solid rgba(201,168,76,0.12);
-    }
-    .footer-top {
-      display: grid; grid-template-columns: 2fr 1fr 1fr;
-      gap: 60px; max-width: 1100px; margin: 0 auto 40px;
-    }
-    .footer-brand span:first-child {
-      display: block; font-family: var(--serif); font-size: 1.6rem;
-      color: var(--gold); margin-bottom: 0.3rem;
-    }
-    .footer-brand span:nth-child(2) {
-      display: block; font-size: 0.58rem; letter-spacing: 0.25em;
-      text-transform: uppercase; color: rgba(247,240,230,0.4); margin-bottom: 1.2rem;
-    }
-    .footer-brand p {
-      font-size: 0.8rem; color: rgba(247,240,230,0.45); line-height: 1.85;
-    }
-    .footer-col h5 {
-      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.2rem; font-weight: 500;
-    }
+    footer { background: var(--charcoal); padding: 60px 5vw 30px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; max-width: 1100px; margin: 0 auto 40px; }
+    .footer-brand span:first-child { display: block; font-family: var(--serif); font-size: 1.6rem; color: var(--gold); margin-bottom: 0.3rem; }
+    .footer-brand span:nth-child(2) { display: block; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(247,240,230,0.4); margin-bottom: 1.2rem; }
+    .footer-brand p { font-size: 0.8rem; color: rgba(247,240,230,0.45); line-height: 1.85; }
+    .footer-col h5 { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; font-weight: 500; }
     .footer-col ul { list-style: none; }
-    .footer-col ul li {
-      font-size: 0.8rem; color: rgba(247,240,230,0.5);
-      margin-bottom: 0.6rem; line-height: 1.6;
-    }
-    .footer-col ul li a {
-      color: inherit; text-decoration: none; transition: color 0.2s;
-    }
+    .footer-col ul li { font-size: 0.8rem; color: rgba(247,240,230,0.5); margin-bottom: 0.6rem; line-height: 1.6; }
+    .footer-col ul li a { color: inherit; text-decoration: none; transition: color 0.2s; }
     .footer-col ul li a:hover { color: var(--gold-lt); }
-    .footer-bottom {
-      max-width: 1100px; margin: 0 auto;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 24px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-bottom p {
-      font-size: 0.72rem; color: rgba(247,240,230,0.25); letter-spacing: 0.06em;
-    }
+    .footer-bottom { max-width: 1100px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.72rem; color: rgba(247,240,230,0.25); letter-spacing: 0.06em; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .story-inner { grid-template-columns: 1fr; gap: 40px; }
-      .exp-grid { grid-template-columns: 1fr; }
-      .info-grid { grid-template-columns: 1fr 1fr; }
-      .test-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; gap: 36px; }
-      .nav-links { display: none; }
-    }
-    @media (max-width: 600px) {
-      .info-grid { grid-template-columns: 1fr; }
-      .intro-strip { gap: 1.5rem; }
-      .strip-sep { display: none; }
-    }
+    @media (max-width: 900px) { .story-inner { grid-template-columns: 1fr; gap: 40px; } .exp-grid { grid-template-columns: 1fr; } .info-grid { grid-template-columns: 1fr 1fr; } .test-grid { grid-template-columns: 1fr; } .footer-top { grid-template-columns: 1fr; gap: 36px; } .nav-links { display: none; } }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } .intro-strip { gap: 1.5rem; } .strip-sep { display: none; } }
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════
+       SOFIA CHATBOT — styled to match Voiceflow screenshot
+    ══════════════════════════════════════ */
+    #sofia-widget {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9000;
+      font-family: var(--sans);
+    }
+
+    /* Launcher button */
+    #sofia-launcher {
+      width: 58px; height: 58px;
+      background: var(--chat-header);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    #sofia-launcher:hover { transform: scale(1.07); box-shadow: 0 6px 28px rgba(0,0,0,0.45); }
+    #sofia-launcher .ico-chat { color: #fff; }
+    #sofia-launcher .ico-close { color: #fff; display: none; }
+    #sofia-widget.open #sofia-launcher .ico-chat { display: none; }
+    #sofia-widget.open #sofia-launcher .ico-close { display: block; }
+
+    .sofia-badge {
+      position: absolute; top: -3px; right: -3px;
+      width: 16px; height: 16px; background: var(--gold);
+      border-radius: 50%; border: 2px solid #fff;
+      animation: badgePulse 2s infinite;
+    }
+    @keyframes badgePulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.2);} }
+    #sofia-widget.open .sofia-badge { display: none; }
+
+    /* Chat window — matching Voiceflow style */
+    #sofia-box {
+      position: absolute; bottom: 70px; right: 0;
+      width: 360px;
+      background: var(--chat-body);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      max-height: 560px;
+      border: 1px solid var(--chat-border);
+      animation: sofaSlide 0.25s ease;
+    }
+    #sofia-widget.open #sofia-box { display: flex; }
+    @keyframes sofaSlide { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Header — dark espresso matching screenshot */
+    #sofia-head {
+      background: var(--chat-header);
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 11px;
+      flex-shrink: 0;
+    }
+    .sofia-logo {
+      width: 42px; height: 42px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 18px;
+      color: var(--charcoal); font-weight: 600; flex-shrink: 0;
+    }
+    .sofia-head-text { flex: 1; }
+    .sofia-head-name {
+      font-size: 13.5px; font-weight: 600;
+      color: #ffffff; letter-spacing: 0.02em;
+    }
+    .sofia-head-sub {
+      font-size: 11px; color: rgba(255,255,255,0.55);
+      margin-top: 1px; display: flex; align-items: center; gap: 5px;
+    }
+    .sofia-head-sub::before {
+      content: ''; width: 6px; height: 6px;
+      background: #4ade80; border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* Messages area */
+    #sofia-msgs {
+      flex: 1; overflow-y: auto;
+      padding: 18px 14px;
+      display: flex; flex-direction: column; gap: 10px;
+      max-height: 360px;
+      background: var(--chat-body);
+    }
+    #sofia-msgs::-webkit-scrollbar { width: 3px; }
+    #sofia-msgs::-webkit-scrollbar-thumb { background: var(--chat-border); border-radius: 2px; }
+
+    /* Bubbles */
+    .sf-bubble {
+      max-width: 82%;
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      border-radius: 16px;
+      animation: bubIn 0.2s ease;
+    }
+    @keyframes bubIn { from{opacity:0;transform:translateY(5px);} to{opacity:1;transform:translateY(0);} }
+    .sf-bubble.bot {
+      background: var(--chat-bot-bubble);
+      color: var(--charcoal);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .sf-bubble.user {
+      background: var(--chat-user-bubble);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      font-weight: 500;
+    }
+
+    /* Quick-reply buttons — dark rounded matching screenshot */
+    .sf-btns {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      align-self: flex-start;
+      padding: 2px 0;
+      animation: bubIn 0.2s ease;
+    }
+    .sf-btn {
+      background: var(--chat-btn);
+      color: #fff;
+      border: none;
+      padding: 9px 16px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .sf-btn:hover { background: var(--chat-btn-hover); }
+
+    /* Typing indicator */
+    .sf-typing {
+      display: flex; gap: 4px; align-items: center;
+      padding: 11px 14px;
+      background: var(--chat-bot-bubble);
+      border-radius: 16px 16px 16px 4px;
+      align-self: flex-start;
+      animation: bubIn 0.2s ease;
+    }
+    .sf-typing span {
+      width: 6px; height: 6px;
+      background: #bbb; border-radius: 50%;
+      animation: typBounce 1.1s infinite;
+    }
+    .sf-typing span:nth-child(2) { animation-delay: 0.18s; }
+    .sf-typing span:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes typBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4;} 30%{transform:translateY(-5px);opacity:1;} }
+
+    /* Input bar */
+    #sofia-foot {
+      display: flex; gap: 0;
+      border-top: 1px solid var(--chat-border);
+      background: #fff; flex-shrink: 0;
+      padding: 10px 12px; gap: 8px; align-items: center;
+    }
+    #sofia-input {
+      flex: 1; border: 1px solid var(--chat-border);
+      border-radius: 22px; padding: 9px 14px;
+      font-family: var(--sans); font-size: 13px;
+      color: var(--charcoal); outline: none;
+      background: #fafafa;
+      transition: border-color 0.2s;
+    }
+    #sofia-input:focus { border-color: #bbb; }
+    #sofia-input::placeholder { color: #bbb; }
+    #sofia-send {
+      width: 36px; height: 36px;
+      background: var(--chat-btn);
+      border: none; border-radius: 50%;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.18s;
+    }
+    #sofia-send:hover { background: var(--chat-btn-hover); }
+    #sofia-send svg { color: #fff; }
+
+    .sofia-powered {
+      text-align: center; font-size: 9.5px;
+      color: #ccc; letter-spacing: 0.1em;
+      padding: 6px 0 8px;
+      background: #fff;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <span>Bella Vista</span>
@@ -422,14 +353,11 @@
   <button class="nav-reserve" onclick="document.getElementById('reserve').scrollIntoView({behavior:'smooth'})">Reserve a Table</button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Est. 1987 · Rome, Italy</div>
-    <h1 class="hero-title">
-      Where Every<br><em>Meal Becomes</em><br>a Memory
-    </h1>
+    <div class="hero-eyebrow">Est. 1987 &middot; Rome, Italy</div>
+    <h1 class="hero-title">Where Every<br><em>Meal Becomes</em><br>a Memory</h1>
     <div class="hero-divider"></div>
     <p class="hero-sub">Authentic Italian cuisine crafted from generations-old recipes, served in the heart of the city.</p>
     <div class="hero-ctas">
@@ -439,30 +367,16 @@
   </div>
 </section>
 
-<!-- INTRO STRIP -->
 <div class="intro-strip">
-  <div class="intro-stat">
-    <strong>37</strong>
-    <span>Years of Excellence</span>
-  </div>
+  <div class="intro-stat"><strong>37</strong><span>Years of Excellence</span></div>
   <div class="strip-sep"></div>
-  <div class="intro-stat">
-    <strong>4.9★</strong>
-    <span>Guest Rating</span>
-  </div>
+  <div class="intro-stat"><strong>4.9&#9733;</strong><span>Guest Rating</span></div>
   <div class="strip-sep"></div>
-  <div class="intro-stat">
-    <strong>12</strong>
-    <span>Signature Dishes</span>
-  </div>
+  <div class="intro-stat"><strong>12</strong><span>Signature Dishes</span></div>
   <div class="strip-sep"></div>
-  <div class="intro-stat">
-    <strong>200+</strong>
-    <span>Wine Selections</span>
-  </div>
+  <div class="intro-stat"><strong>200+</strong><span>Wine Selections</span></div>
 </div>
 
-<!-- STORY -->
 <section class="story" id="story">
   <div class="story-inner">
     <div class="story-text reveal">
@@ -470,7 +384,7 @@
       <h2 class="section-title">A Tradition of<br><em>Italian Passion</em></h2>
       <div class="gold-line"></div>
       <p>Bella Vista was born in a small trattoria in Rome where Chef Marco Romani first learned the art of pasta-making from his grandmother. Every handmade noodle, every slow-simmered sauce carries the same love and precision passed down through four generations.</p>
-      <p>Today, we bring that unbroken tradition to your table — sourcing the finest San Marzano tomatoes, aged Parmigiano-Reggiano, and single-estate olive oils to ensure every bite is an authentic taste of Italy.</p>
+      <p>Today, we bring that unbroken tradition to your table, sourcing the finest San Marzano tomatoes, aged Parmigiano-Reggiano, and single-estate olive oils to ensure every bite is an authentic taste of Italy.</p>
     </div>
     <div class="story-image reveal">
       <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop&q=80" alt="Interior of Bella Vista Restaurant" loading="lazy"/>
@@ -478,7 +392,6 @@
   </div>
 </section>
 
-<!-- MENU -->
 <section class="menu-section" id="menu">
   <div class="menu-header reveal">
     <div class="section-tag">La Nostra Cucina</div>
@@ -491,101 +404,32 @@
       <button class="menu-tab" data-tab="desserts">Desserts</button>
     </div>
   </div>
-
-  <!-- STARTERS -->
   <div class="menu-grid active" id="tab-starters">
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Bruschetta al Pomodoro</h3><span class="menu-price">£8</span></div>
-      <p>Toasted sourdough with heritage tomatoes, fresh basil, and cold-pressed extra virgin olive oil.</p>
-      <span class="menu-badge">Vegan</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Burrata con Prosciutto</h3><span class="menu-price">£14</span></div>
-      <p>Creamy burrata from Puglia, Parma ham aged 18 months, rocket, and aged balsamic.</p>
-      <span class="menu-badge">Signature</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Carpaccio di Manzo</h3><span class="menu-price">£16</span></div>
-      <p>Thinly sliced raw beef fillet, lemon oil dressing, capers, and shaved Parmigiano-Reggiano.</p>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Zuppa del Giorno</h3><span class="menu-price">£9</span></div>
-      <p>Chef's daily soup crafted from seasonal vegetables and slow-cooked stock. Ask your server.</p>
-      <span class="menu-badge">Seasonal</span>
-    </div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Bruschetta al Pomodoro</h3><span class="menu-price">&#163;8</span></div><p>Toasted sourdough with heritage tomatoes, fresh basil, and cold-pressed extra virgin olive oil.</p><span class="menu-badge">Vegan</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Burrata con Prosciutto</h3><span class="menu-price">&#163;14</span></div><p>Creamy burrata from Puglia, Parma ham aged 18 months, rocket, and aged balsamic.</p><span class="menu-badge">Signature</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Carpaccio di Manzo</h3><span class="menu-price">&#163;16</span></div><p>Thinly sliced raw beef fillet, lemon oil dressing, capers, and shaved Parmigiano-Reggiano.</p></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Zuppa del Giorno</h3><span class="menu-price">&#163;9</span></div><p>Chef's daily soup crafted from seasonal vegetables and slow-cooked stock. Ask your server.</p><span class="menu-badge">Seasonal</span></div>
   </div>
-
-  <!-- PASTA -->
   <div class="menu-grid" id="tab-pasta">
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Tagliatelle al Ragù</h3><span class="menu-price">£18</span></div>
-      <p>Fresh egg pasta with a 6-hour Bolognese of grass-fed beef and heritage pork, finished with Parmigiano.</p>
-      <span class="menu-badge">Chef's Favourite</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Cacio e Pepe</h3><span class="menu-price">£16</span></div>
-      <p>Tonnarelli pasta, aged Pecorino Romano, and a generous hand of Tellicherry black pepper. Simply perfect.</p>
-      <span class="menu-badge">Vegetarian</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Pappardelle al Cinghiale</h3><span class="menu-price">£22</span></div>
-      <p>Wide ribbon pasta with a slow-braised wild boar ragù, rosemary, juniper and red wine reduction.</p>
-      <span class="menu-badge">Signature</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Linguine alle Vongole</h3><span class="menu-price">£24</span></div>
-      <p>Linguine with sustainable clams, white wine, chilli, garlic and flat-leaf parsley. Served in the shell.</p>
-    </div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Tagliatelle al Ragu</h3><span class="menu-price">&#163;18</span></div><p>Fresh egg pasta with a 6-hour Bolognese of grass-fed beef and heritage pork, finished with Parmigiano.</p><span class="menu-badge">Chef's Favourite</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Cacio e Pepe</h3><span class="menu-price">&#163;16</span></div><p>Tonnarelli pasta, aged Pecorino Romano, and a generous hand of Tellicherry black pepper.</p><span class="menu-badge">Vegetarian</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Pappardelle al Cinghiale</h3><span class="menu-price">&#163;22</span></div><p>Wide ribbon pasta with a slow-braised wild boar ragu, rosemary, juniper and red wine reduction.</p><span class="menu-badge">Signature</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Linguine alle Vongole</h3><span class="menu-price">&#163;24</span></div><p>Linguine with sustainable clams, white wine, chilli, garlic and flat-leaf parsley. Served in the shell.</p></div>
   </div>
-
-  <!-- MAINS -->
   <div class="menu-grid" id="tab-mains">
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Branzino al Forno</h3><span class="menu-price">£28</span></div>
-      <p>Whole roasted sea bass with lemon, capers, olives and vine tomatoes. Served tableside.</p>
-      <span class="menu-badge">Gluten Free</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Costata di Manzo</h3><span class="menu-price">£42</span></div>
-      <p>28-day dry-aged Hereford ribeye, rosemary butter, roasted garlic and seasonal greens.</p>
-      <span class="menu-badge">Signature</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Pollo alla Cacciatora</h3><span class="menu-price">£24</span></div>
-      <p>Free-range chicken braised with heritage tomatoes, olives, capers and aromatic herbs.</p>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Risotto ai Funghi</h3><span class="menu-price">£20</span></div>
-      <p>Vialone Nano rice with wild porcini, chestnut mushrooms, truffle oil and 36-month Parmigiano.</p>
-      <span class="menu-badge">Vegetarian</span>
-    </div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Branzino al Forno</h3><span class="menu-price">&#163;28</span></div><p>Whole roasted sea bass with lemon, capers, olives and vine tomatoes. Served tableside.</p><span class="menu-badge">Gluten Free</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Costata di Manzo</h3><span class="menu-price">&#163;42</span></div><p>28-day dry-aged Hereford ribeye, rosemary butter, roasted garlic and seasonal greens.</p><span class="menu-badge">Signature</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Pollo alla Cacciatora</h3><span class="menu-price">&#163;24</span></div><p>Free-range chicken braised with heritage tomatoes, olives, capers and aromatic herbs.</p></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Risotto ai Funghi</h3><span class="menu-price">&#163;20</span></div><p>Vialone Nano rice with wild porcini, chestnut mushrooms, truffle oil and 36-month Parmigiano.</p><span class="menu-badge">Vegetarian</span></div>
   </div>
-
-  <!-- DESSERTS -->
   <div class="menu-grid" id="tab-desserts">
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Tiramisù della Casa</h3><span class="menu-price">£9</span></div>
-      <p>Classic recipe with Savoiardi biscuits, fresh mascarpone, Kahlúa espresso and house-made cocoa dust.</p>
-      <span class="menu-badge">Signature</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Panna Cotta al Miele</h3><span class="menu-price">£8</span></div>
-      <p>Silky vanilla panna cotta with wildflower honey, poached pear and crushed amaretti.</p>
-      <span class="menu-badge">Gluten Free</span>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Cannolo Siciliano</h3><span class="menu-price">£8</span></div>
-      <p>Crispy pastry shell filled to order with fresh ricotta, candied orange and dark chocolate chips.</p>
-    </div>
-    <div class="menu-card reveal">
-      <div class="menu-card-top"><h3>Gelato Artigianale</h3><span class="menu-price">£7</span></div>
-      <p>Three scoops of house-made gelato. Ask your server for today's flavours. Sorbetto also available.</p>
-      <span class="menu-badge">Vegan Option</span>
-    </div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Tiramisu della Casa</h3><span class="menu-price">&#163;9</span></div><p>Classic recipe with Savoiardi biscuits, fresh mascarpone, espresso and house-made cocoa dust.</p><span class="menu-badge">Signature</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Panna Cotta al Miele</h3><span class="menu-price">&#163;8</span></div><p>Silky vanilla panna cotta with wildflower honey, poached pear and crushed amaretti.</p><span class="menu-badge">Gluten Free</span></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Cannolo Siciliano</h3><span class="menu-price">&#163;8</span></div><p>Crispy pastry shell filled to order with fresh ricotta, candied orange and dark chocolate chips.</p></div>
+    <div class="menu-card reveal"><div class="menu-card-top"><h3>Gelato Artigianale</h3><span class="menu-price">&#163;7</span></div><p>Three scoops of house-made gelato. Ask your server for today's flavours. Sorbetto also available.</p><span class="menu-badge">Vegan Option</span></div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section class="experience" id="experience">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="reveal">
@@ -593,72 +437,38 @@
       <h2 class="section-title">More Than a Meal.<br><em>An Experience.</em></h2>
     </div>
     <div class="exp-grid">
-      <div class="exp-item reveal">
-        <div class="exp-num">01</div>
-        <h3>Private Dining</h3>
-        <p>Host your celebration in our intimate La Sala Privata, exclusively yours for the evening — fully bespoke menus available for groups of 8 to 30 guests.</p>
-      </div>
-      <div class="exp-item reveal">
-        <div class="exp-num">02</div>
-        <h3>Wine Cellar Tastings</h3>
-        <p>Descend into our historic cellar with our sommelier for a guided journey through Italian wine regions — from Barolo to Brunello di Montalcino.</p>
-      </div>
-      <div class="exp-item reveal">
-        <div class="exp-num">03</div>
-        <h3>Chef's Table</h3>
-        <p>An exclusive counter seat in the heart of our open kitchen. Watch, learn, and taste as Chef Marco prepares a bespoke 7-course tasting menu for your table.</p>
-      </div>
+      <div class="exp-item reveal"><div class="exp-num">01</div><h3>Private Dining</h3><p>Host your celebration in our intimate La Sala Privata, exclusively yours for the evening. Fully bespoke menus available for groups of 8 to 30 guests.</p></div>
+      <div class="exp-item reveal"><div class="exp-num">02</div><h3>Wine Cellar Tastings</h3><p>Descend into our historic cellar with our sommelier for a guided journey through Italian wine regions, from Barolo to Brunello di Montalcino.</p></div>
+      <div class="exp-item reveal"><div class="exp-num">03</div><h3>Chef's Table</h3><p>An exclusive counter seat in the heart of our open kitchen. Watch, learn, and taste as Chef Marco prepares a bespoke 7-course tasting menu for your table.</p></div>
     </div>
   </div>
 </section>
 
-<!-- INFO -->
 <section class="info-section" id="visit">
   <div class="info-grid">
     <div class="info-block reveal">
       <svg class="info-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <h4>Opening Hours</h4>
-      <p>
-        <strong>Monday – Thursday</strong><br>12:00 – 15:00 &nbsp;|&nbsp; 18:00 – 22:30<br><br>
-        <strong>Friday – Saturday</strong><br>12:00 – 15:00 &nbsp;|&nbsp; 18:00 – 23:00<br><br>
-        <strong>Sunday</strong><br>12:00 – 16:00 (Brunch)
-      </p>
+      <p><strong>Monday to Thursday</strong><br>12:00 to 15:00 &nbsp;|&nbsp; 18:00 to 22:30<br><br><strong>Friday to Saturday</strong><br>12:00 to 15:00 &nbsp;|&nbsp; 18:00 to 23:00<br><br><strong>Sunday</strong><br>12:00 to 16:00 (Brunch)</p>
     </div>
     <div class="info-block reveal">
       <svg class="info-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
       <h4>Location</h4>
-      <p>
-        <strong>42 Via Roma Lane</strong><br>
-        Covent Garden<br>
-        London, WC2E 8HD<br><br>
-        Nearest tube: Covent Garden (Piccadilly Line, 3 min walk)
-      </p>
+      <p><strong>42 Via Roma Lane</strong><br>Covent Garden<br>London, WC2E 8HD<br><br>Nearest tube: Covent Garden (Piccadilly Line, 3 min walk)</p>
     </div>
     <div class="info-block reveal">
       <svg class="info-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      <h4>Parking & Access</h4>
-      <p>
-        <strong>NCP Covent Garden</strong><br>
-        Shelton Street, WC2H 9JQ<br>
-        5-minute walk<br><br>
-        Full wheelchair access. Please inform us of any accessibility requirements.
-      </p>
+      <h4>Parking and Access</h4>
+      <p><strong>NCP Covent Garden</strong><br>Shelton Street, WC2H 9JQ<br>5-minute walk<br><br>Full wheelchair access. Please inform us of any accessibility requirements.</p>
     </div>
     <div class="info-block reveal">
       <svg class="info-icon" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 17z"/></svg>
-      <h4>Contact & Reservations</h4>
-      <p>
-        <strong>Reservations</strong><br>
-        +44 (0)20 7836 0000<br><br>
-        <strong>Email</strong><br>
-        reservations@bellavista.co.uk<br><br>
-        Or chat with <strong>Sofia</strong> below ↓
-      </p>
+      <h4>Contact and Reservations</h4>
+      <p><strong>Reservations</strong><br>+44 (0)20 7836 0000<br><br><strong>Email</strong><br>reservations@bellavista.co.uk<br><br>Or chat with <strong>Sofia</strong> below</p>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="test-header reveal">
     <div class="section-tag">Guest Reviews</div>
@@ -667,126 +477,350 @@
   </div>
   <div class="test-grid">
     <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <blockquote>"The pappardelle with wild boar was transcendent. We've eaten across Italy and this rivals anything in Florence. Bella Vista has become our annual anniversary tradition."</blockquote>
-      <div class="test-author">
-        <div class="author-avatar">S</div>
-        <div class="author-info">
-          <strong>Sarah T.</strong>
-          <span>Verified Guest · Google Review</span>
-        </div>
-      </div>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"The pappardelle with wild boar was transcendent. We have eaten across Italy and this rivals anything in Florence. Bella Vista has become our annual anniversary tradition."</blockquote>
+      <div class="test-author"><div class="author-avatar">S</div><div class="author-info"><strong>Sarah T.</strong><span>Verified Guest &middot; Google Review</span></div></div>
     </div>
     <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Chef's Table was extraordinary — Marco talked us through every course personally. The truffle risotto alone was worth the trip. Impeccable service from start to finish."</blockquote>
-      <div class="test-author">
-        <div class="author-avatar">J</div>
-        <div class="author-info">
-          <strong>James M.</strong>
-          <span>Verified Guest · TripAdvisor</span>
-        </div>
-      </div>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"The Chef's Table was extraordinary. Marco talked us through every course personally. The truffle risotto alone was worth the trip. Impeccable service from start to finish."</blockquote>
+      <div class="test-author"><div class="author-avatar">J</div><div class="author-info"><strong>James M.</strong><span>Verified Guest &middot; TripAdvisor</span></div></div>
     </div>
     <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <blockquote>"We hosted our company dinner for 20 people in the private dining room. The food was flawless, the sommelier's pairings were inspired, and the team couldn't have been more attentive."</blockquote>
-      <div class="test-author">
-        <div class="author-avatar">L</div>
-        <div class="author-info">
-          <strong>Lucy W.</strong>
-          <span>Corporate Guest · OpenTable</span>
-        </div>
-      </div>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"We hosted our company dinner for 20 people in the private dining room. The food was flawless, the sommelier's pairings were inspired, and the team could not have been more attentive."</blockquote>
+      <div class="test-author"><div class="author-avatar">L</div><div class="author-info"><strong>Lucy W.</strong><span>Corporate Guest &middot; OpenTable</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- RESERVATION CTA -->
 <section class="reservation-section" id="reserve">
   <div class="res-inner reveal">
     <div class="section-tag">Book Your Table</div>
     <h2 class="section-title">Ready to <em>Experience</em><br>Bella Vista?</h2>
     <div class="gold-line"></div>
-    <p>Join us for lunch, dinner, or a private event. Our team is ready to create an unforgettable Italian dining experience for you. Chat with Sofia below to reserve your table instantly or enquire about our private dining options.</p>
-    <button class="btn-primary" style="font-size:0.78rem;padding:16px 42px;" onclick="window.voiceflow && window.voiceflow.chat && window.voiceflow.chat.open()">Chat with Sofia to Reserve →</button>
-    <p class="res-cta-note">Or call us: +44 (0)20 7836 0000 · reservations@bellavista.co.uk</p>
+    <p>Join us for lunch, dinner, or a private event. Our team is ready to create an unforgettable Italian dining experience for you. Chat with Sofia to reserve your table instantly or enquire about our private dining options.</p>
+    <button class="btn-primary" style="font-size:0.78rem;padding:16px 42px;" onclick="document.getElementById('sofia-widget').classList.add('open'); if(document.getElementById('sofia-msgs').children.length===0){setTimeout(sofiaInit,300);}">Chat with Sofia to Reserve &rarr;</button>
+    <p class="res-cta-note">Or call us: +44 (0)20 7836 0000 &middot; reservations@bellavista.co.uk</p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <span>Bella Vista</span>
-      <span>Ristorante Italiano · Est. 1987</span>
-      <p>Authentic Italian cuisine served with warmth, passion and the finest ingredients — in the heart of London since 1987.</p>
+      <span>Ristorante Italiano &middot; Est. 1987</span>
+      <p>Authentic Italian cuisine served with warmth, passion and the finest ingredients, in the heart of London since 1987.</p>
     </div>
     <div class="footer-col">
       <h5>Navigate</h5>
-      <ul>
-        <li><a href="#story">Our Story</a></li>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#experience">Experiences</a></li>
-        <li><a href="#visit">Visit Us</a></li>
-        <li><a href="#reserve">Reservations</a></li>
-      </ul>
+      <ul><li><a href="#story">Our Story</a></li><li><a href="#menu">Menu</a></li><li><a href="#experience">Experiences</a></li><li><a href="#visit">Visit Us</a></li><li><a href="#reserve">Reservations</a></li></ul>
     </div>
     <div class="footer-col">
       <h5>Follow Us</h5>
-      <ul>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">TripAdvisor</a></li>
-        <li><a href="#">OpenTable</a></li>
-      </ul>
+      <ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">TripAdvisor</a></li><li><a href="#">OpenTable</a></li></ul>
       <h5 style="margin-top:1.6rem;">Private Events</h5>
-      <ul>
-        <li>events@bellavista.co.uk</li>
-        <li>+44 (0)20 7836 0001</li>
-      </ul>
+      <ul><li>events@bellavista.co.uk</li><li>+44 (0)20 7836 0001</li></ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2024 Bella Vista Ristorante. All rights reserved.</p>
-    <p>Privacy Policy · Terms of Use · Allergen Information</p>
+    <p>2024 Bella Vista Ristorante. All rights reserved.</p>
+    <p>Privacy Policy &middot; Terms of Use &middot; Allergen Information</p>
   </div>
 </footer>
 
-<!-- SOFIA CHATBOT (Voiceflow) -->
-<script type="text/javascript">
-(function(d, t) {
-  var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-  v.onload = function() {
-    window.voiceflow.chat.load({
-      verify: { projectID: '6a1de46c3bc26364ec53e595' },
-      url: 'https://general-runtime.voiceflow.com',
-      voice: {
-        url: "https://runtime-api.voiceflow.com"
-      }
-    });
-  }
-  v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-})(document, 'script');
-</script>
+<!-- ══ SOFIA CHATBOT WIDGET ══ -->
+<div id="sofia-widget">
+  <div id="sofia-box">
+    <div id="sofia-head">
+      <div class="sofia-logo">S</div>
+      <div class="sofia-head-text">
+        <div class="sofia-head-name">Bella Vista Assistant</div>
+        <div class="sofia-head-sub">Online &mdash; Sofia</div>
+      </div>
+    </div>
+    <div id="sofia-msgs"></div>
+    <div id="sofia-foot">
+      <input id="sofia-input" type="text" placeholder="Type a message..." autocomplete="off" />
+      <button id="sofia-send" aria-label="Send">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="sofia-powered">Powered by AI &middot; Bella Vista</div>
+  </div>
+  <button id="sofia-launcher" aria-label="Chat with Sofia">
+    <svg class="ico-chat" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <svg class="ico-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <div class="sofia-badge"></div>
+  </button>
+</div>
 
-<!-- MENU TABS -->
 <script>
-  document.querySelectorAll('.menu-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.menu-tab').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.menu-grid').forEach(g => g.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    });
+// ══════════════════════════════════════════════════════
+//  SOFIA CHATBOT — Smart Intent Engine for Bella Vista
+// ══════════════════════════════════════════════════════
+
+var INTENTS = [
+  { name: "reserve",     kw: ["reserv","book","table","seat","booking","make a reserv","get a table","book a table","dine","dinner","lunch","tonight","tomorrow","this weekend","saturday","sunday","party of","for two","for 2","for 3","for 4","for 5","for 6","people","guests","availability","available"] },
+  { name: "menu",        kw: ["menu","food","eat","dish","dishes","what do you serve","what do you have","cuisine","italian","pasta","pizza","starter","main","dessert","vegan","vegetarian","gluten","allerg","halal","kosher","wine","drink","tiramisu","risotto","bruschetta","burrata","carpaccio","tagliatelle","linguine","pappardelle","branzino","pollo","cannolo","gelato","panna cotta"] },
+  { name: "hours",       kw: ["hour","hours","open","opening","close","closing","when","time","what time","monday","tuesday","wednesday","thursday","friday","saturday","sunday","weekend","weekday","today","tomorrow","brunch","lunch time","dinner time","are you open","do you open"] },
+  { name: "location",    kw: ["locat","where","address","find you","how to get","direction","covent garden","london","map","nearest","tube","underground","transport","parking","park","car","drive","wheelchair","access","accessible"] },
+  { name: "private",     kw: ["private","event","events","group","party","birthday","anniversary","corporate","wedding","celebration","function","hire","exclusive","sala privata","large group","special occasion","big group","buy out","buyout"] },
+  { name: "chefs_table", kw: ["chef","tasting menu","kitchen","7 course","seven course","experience","special experience","unique"] },
+  { name: "wine",        kw: ["wine","wines","sommelier","cellar","barolo","brunello","champagne","prosecco","cocktail","drink","beverage","drinks menu","bottle","glass","pairing"] },
+  { name: "delivery",    kw: ["delivery","deliver","takeaway","take away","takeout","take out","order food","order online","uber eats","deliveroo","just eat","home delivery","collect","collection"] },
+  { name: "contact",     kw: ["contact","phone","call","email","number","reach","get in touch","speak to","talk to","whatsapp","message"] },
+  { name: "price",       kw: ["price","prices","cost","how much","expensive","cheap","afford","budget","value","menu price","set menu","tasting price","cover charge","service charge"] },
+  { name: "greeting",    kw: ["hello","hi","hey","good morning","good afternoon","good evening","hiya","greetings","morning","afternoon","evening","howdy"] },
+  { name: "thanks",      kw: ["thank you","thanks","appreciate","that helps","helpful","perfect","wonderful","great","brilliant","cheers"] },
+  { name: "dietary",     kw: ["allerg","allergen","gluten","vegan","vegetarian","dairy free","nut","lactose","intoleran","halal","kosher","diet","dietary","celiac","coeliac"] }
+];
+
+function detectIntent(text) {
+  var t = text.toLowerCase();
+  var best = null, bestScore = 0;
+  INTENTS.forEach(function(intent) {
+    var score = 0;
+    intent.kw.forEach(function(kw) { if (t.includes(kw)) score++; });
+    if (score > bestScore) { bestScore = score; best = intent.name; }
   });
+  return bestScore > 0 ? best : null;
+}
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+var stage = "idle";
+var resData = {};
+
+var widget  = document.getElementById("sofia-widget");
+var msgs    = document.getElementById("sofia-msgs");
+var input   = document.getElementById("sofia-input");
+var sendBtn = document.getElementById("sofia-send");
+
+document.getElementById("sofia-launcher").addEventListener("click", function() {
+  widget.classList.toggle("open");
+  if (widget.classList.contains("open") && msgs.children.length === 0) {
+    setTimeout(sofiaInit, 350);
+  }
+});
+
+sendBtn.addEventListener("click", doSend);
+input.addEventListener("keydown", function(e) { if (e.key === "Enter") doSend(); });
+
+function doSend() {
+  var txt = input.value.trim();
+  if (!txt) return;
+  input.value = "";
+  // Clear lingering buttons
+  msgs.querySelectorAll(".sf-btns").forEach(function(b){ b.remove(); });
+  addBubble(txt, "user");
+  handleInput(txt);
+}
+
+function addBubble(html, who) {
+  var b = document.createElement("div");
+  b.className = "sf-bubble " + who;
+  b.innerHTML = html;
+  msgs.appendChild(b);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addBtns(labels) {
+  var wrap = document.createElement("div");
+  wrap.className = "sf-btns";
+  labels.forEach(function(lbl) {
+    var b = document.createElement("button");
+    b.className = "sf-btn";
+    b.textContent = lbl;
+    b.addEventListener("click", function() {
+      wrap.remove();
+      addBubble(lbl, "user");
+      handleInput(lbl);
+    });
+    wrap.appendChild(b);
+  });
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function typing(cb, ms) {
+  var t = document.createElement("div");
+  t.className = "sf-typing";
+  t.innerHTML = "<span></span><span></span><span></span>";
+  msgs.appendChild(t);
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(function() { t.remove(); cb(); }, ms || 800);
+}
+
+function sofia(html, btns, ms) {
+  typing(function() {
+    addBubble(html, "bot");
+    if (btns && btns.length) addBtns(btns);
+  }, ms || 800);
+}
+
+var mainMenu = ["Reserve a Table", "View Our Menu", "Opening Hours", "Find Us", "Private Dining"];
+
+function sofiaInit() {
+  stage = "idle";
+  sofia(
+    "Welcome to <strong>Bella Vista Restaurant</strong>! I am Sofia, and I would love to help you with anything you need today. Whether you are planning a visit, curious about our menu, or want to make a reservation, I am here for you.<br><br>What can I assist you with?",
+    mainMenu, 600
+  );
+}
+
+window.sofiaInit = sofiaInit;
+
+function handleInput(txt) {
+  var t = txt.toLowerCase();
+
+  // Button routing
+  if (t === "reserve a table" || t === "make a reservation") { startReservation(); return; }
+  if (t === "view our menu") { showMenu(); return; }
+  if (t === "opening hours") { showHours(); return; }
+  if (t === "find us") { showLocation(); return; }
+  if (t === "private dining") { showPrivate(); return; }
+  if (t === "back to menu" || t === "main menu") { stage = "idle"; sofia("Of course! How else can I help you?", mainMenu, 400); return; }
+  if (t === "starters") { showStarters(); return; }
+  if (t === "pasta") { showPasta(); return; }
+  if (t === "mains") { showMains(); return; }
+  if (t === "desserts") { showDesserts(); return; }
+  if (t === "yes, book my table" || t === "confirm reservation") { confirmReservation(); return; }
+
+  // Stage-specific: collecting reservation details
+  if (stage === "res_date") { resData.date = txt; stage = "res_time"; sofia("What time would you like to dine with us? We are open from 12pm for lunch and from 6pm for dinner.", ["12:00 pm", "1:00 pm", "6:00 pm", "7:00 pm", "7:30 pm", "8:00 pm"]); return; }
+  if (stage === "res_time") { resData.time = txt; stage = "res_guests"; sofia("How many guests will be joining you?", ["1 guest", "2 guests", "3 guests", "4 guests", "5 guests", "6+ guests"]); return; }
+  if (stage === "res_guests") { resData.guests = txt; stage = "res_name"; sofia("Lovely. May I take the name for the reservation?"); return; }
+  if (stage === "res_name") { resData.name = txt; stage = "res_phone"; sofia("Thank you, " + txt.split(" ")[0] + ". And a contact phone number so we can confirm your booking?"); return; }
+  if (stage === "res_phone") { resData.phone = txt; stage = "res_confirm"; sofia("Almost done. Do you have any special requirements, dietary needs, or would you like to mention a special occasion?", ["No special requirements", "Birthday celebration", "Anniversary dinner", "Dietary requirements", "Wheelchair access needed"]); return; }
+  if (stage === "res_confirm" || stage === "res_notes") {
+    resData.notes = txt; stage = "res_done";
+    sofia(
+      "Your reservation is confirmed. Here is a summary:<br><br>" +
+      "Date: <strong>" + (resData.date || "Date to confirm") + "</strong><br>" +
+      "Time: <strong>" + resData.time + "</strong><br>" +
+      "Guests: <strong>" + resData.guests + "</strong><br>" +
+      "Name: <strong>" + resData.name + "</strong><br>" +
+      "Contact: <strong>" + resData.phone + "</strong><br>" +
+      (resData.notes && resData.notes !== "No special requirements" ? "Notes: <strong>" + resData.notes + "</strong><br>" : "") +
+      "<br>We will send a confirmation to your phone shortly. We look forward to welcoming you to Bella Vista!",
+      ["View Our Menu", "Back to Menu"]
+    );
+    return;
+  }
+
+  // Free text: run intent detection
+  var intent = detectIntent(t);
+  if (intent) {
+    respondToIntent(intent);
+  } else {
+    sofia("I want to make sure I help you properly. Could you tell me a little more, or choose from the options below?", mainMenu);
+  }
+}
+
+function respondToIntent(intent) {
+  switch (intent) {
+    case "greeting":
+      sofia("Hello! Welcome to Bella Vista. I am Sofia, your dining assistant. How can I help you today?", mainMenu, 500);
+      break;
+    case "thanks":
+      sofia("You are so welcome! We look forward to seeing you at Bella Vista. Is there anything else I can help you with?", mainMenu, 500);
+      break;
+    case "reserve":
+      startReservation();
+      break;
+    case "menu":
+      showMenu();
+      break;
+    case "hours":
+      showHours();
+      break;
+    case "location":
+      showLocation();
+      break;
+    case "private":
+      showPrivate();
+      break;
+    case "chefs_table":
+      sofia("Our <strong>Chef's Table</strong> is one of Bella Vista's most exclusive experiences. You sit at a counter in the heart of our open kitchen and Chef Marco prepares a bespoke 7-course tasting menu personally for your table, explaining each dish as it arrives. It is available for 2 to 6 guests and must be booked in advance. Would you like to reserve the Chef's Table?", ["Yes, Reserve Chef's Table", "Tell Me More", "Back to Menu"]);
+      break;
+    case "wine":
+      sofia("Our <strong>Wine Cellar</strong> holds over 200 selections, curated by our head sommelier. We offer guided cellar tastings that take you through the great Italian wine regions from Barolo to Brunello. Our sommelier is also happy to recommend the perfect pairing for your meal. Would you like to know more or make a reservation?", ["Reserve a Table", "View Our Menu", "Back to Menu"]);
+      break;
+    case "delivery":
+      sofia("Bella Vista is a full dining experience best enjoyed in our restaurant. We do not currently offer home delivery, but we would love to welcome you in person. We are open 7 days a week and reservations can be made instantly right here with me.", ["Reserve a Table", "Opening Hours", "Back to Menu"]);
+      break;
+    case "contact":
+      sofia("You can reach us in the following ways:<br><br>Phone: <strong>+44 (0)20 7836 0000</strong><br>Email: <strong>reservations@bellavista.co.uk</strong><br>Private Events: <strong>events@bellavista.co.uk</strong><br><br>We are based at <strong>42 Via Roma Lane, Covent Garden, London WC2E 8HD</strong>. Is there anything else I can help with?", ["Reserve a Table", "Back to Menu"]);
+      break;
+    case "price":
+      sofia("Our menu is priced to reflect the quality of our ingredients and the care that goes into every dish. Starters from <strong>&#163;8</strong>, pasta from <strong>&#163;16</strong>, mains from <strong>&#163;20</strong>, and desserts from <strong>&#163;7</strong>. We also offer a Chef's Table 7-course tasting experience. Would you like to see the full menu?", ["View Our Menu", "Reserve a Table", "Back to Menu"]);
+      break;
+    case "dietary":
+      sofia("We take dietary needs very seriously at Bella Vista. Our menu includes <strong>vegan, vegetarian, gluten-free and dairy-free</strong> options, clearly marked on every dish. Please inform us of any allergies when booking and our chef will accommodate you. Would you like to see the menu or make a reservation?", ["View Our Menu", "Reserve a Table", "Back to Menu"]);
+      break;
+    default:
+      sofia("I want to make sure I help you properly. Could you tell me a little more, or choose from the options below?", mainMenu);
+  }
+}
+
+function startReservation() {
+  stage = "res_date";
+  resData = {};
+  sofia("Wonderful! I would love to get your table booked. What date are you looking to dine with us?", ["Tonight", "Tomorrow", "This Saturday", "This Sunday", "Next Week"]);
+}
+
+function confirmReservation() {
+  stage = "res_notes";
+  sofia("Do you have any special requirements, dietary needs, or a special occasion we should know about?", ["No special requirements", "Birthday celebration", "Anniversary dinner", "Dietary requirements"]);
+}
+
+function showMenu() {
+  sofia("Our menu is inspired by the seasons and crafted from the finest Italian ingredients. Which section would you like to explore?",
+    ["Starters", "Pasta", "Mains", "Desserts", "Back to Menu"]);
+}
+
+function showStarters() {
+  sofia("<strong>Starters</strong><br><br>Bruschetta al Pomodoro &mdash; &#163;8 <em>(Vegan)</em><br>Burrata con Prosciutto &mdash; &#163;14 <em>(Signature)</em><br>Carpaccio di Manzo &mdash; &#163;16<br>Zuppa del Giorno &mdash; &#163;9 <em>(Seasonal)</em><br><br>All starters are made fresh daily from seasonal produce.", ["Pasta", "Mains", "Desserts", "Reserve a Table", "Back to Menu"]);
+}
+
+function showPasta() {
+  sofia("<strong>Pasta</strong><br><br>Tagliatelle al Ragu &mdash; &#163;18 <em>(Chef's Favourite)</em><br>Cacio e Pepe &mdash; &#163;16 <em>(Vegetarian)</em><br>Pappardelle al Cinghiale &mdash; &#163;22 <em>(Signature)</em><br>Linguine alle Vongole &mdash; &#163;24<br><br>All pasta is made fresh in-house every morning.", ["Starters", "Mains", "Desserts", "Reserve a Table", "Back to Menu"]);
+}
+
+function showMains() {
+  sofia("<strong>Main Courses</strong><br><br>Branzino al Forno &mdash; &#163;28 <em>(Gluten Free)</em><br>Costata di Manzo &mdash; &#163;42 <em>(Signature)</em><br>Pollo alla Cacciatora &mdash; &#163;24<br>Risotto ai Funghi &mdash; &#163;20 <em>(Vegetarian)</em><br><br>All mains are served with seasonal sides.", ["Starters", "Pasta", "Desserts", "Reserve a Table", "Back to Menu"]);
+}
+
+function showDesserts() {
+  sofia("<strong>Desserts</strong><br><br>Tiramisu della Casa &mdash; &#163;9 <em>(Signature)</em><br>Panna Cotta al Miele &mdash; &#163;8 <em>(Gluten Free)</em><br>Cannolo Siciliano &mdash; &#163;8<br>Gelato Artigianale &mdash; &#163;7 <em>(Vegan Option)</em><br><br>Our desserts are made in-house daily.", ["Starters", "Pasta", "Mains", "Reserve a Table", "Back to Menu"]);
+}
+
+function showHours() {
+  sofia("<strong>Opening Hours</strong><br><br>Monday to Thursday: 12:00 to 15:00 and 18:00 to 22:30<br>Friday to Saturday: 12:00 to 15:00 and 18:00 to 23:00<br>Sunday: 12:00 to 16:00 (Brunch only)<br><br>Last orders are taken 30 minutes before closing. Reservations are recommended, especially on weekends.", ["Reserve a Table", "Back to Menu"]);
+}
+
+function showLocation() {
+  sofia("<strong>How to Find Us</strong><br><br>42 Via Roma Lane, Covent Garden, London WC2E 8HD<br><br>Nearest tube: <strong>Covent Garden</strong> (Piccadilly Line, 3 minute walk)<br>Parking: NCP Covent Garden, Shelton Street (5 minute walk)<br><br>We have full wheelchair access. Please let us know in advance if you have any accessibility requirements.", ["Reserve a Table", "Opening Hours", "Back to Menu"]);
+}
+
+function showPrivate() {
+  sofia("Our <strong>Private Dining Room</strong> (La Sala Privata) is available for exclusive hire for groups of 8 to 30 guests. We offer fully bespoke menus, dedicated service, and a curated wine list. Perfect for birthdays, anniversaries, corporate dinners, and celebrations of all kinds.<br><br>For private dining enquiries, please contact us at <strong>events@bellavista.co.uk</strong> or call <strong>+44 (0)20 7836 0001</strong>. Would you like to make a reservation?", ["Reserve a Table", "Contact Details", "Back to Menu"]);
+}
+
+// Menu tabs
+document.querySelectorAll(".menu-tab").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll(".menu-tab").forEach(function(b){ b.classList.remove("active"); });
+    document.querySelectorAll(".menu-grid").forEach(function(g){ g.classList.remove("active"); });
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+  });
+});
+
+// Scroll reveal
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add("visible"); } });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(function(el){ observer.observe(el); });
 </script>
-
 </body>
 </html>
